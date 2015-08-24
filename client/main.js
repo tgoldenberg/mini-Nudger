@@ -15,6 +15,21 @@ if (Meteor.isClient) {
     }
   });
 
+
+
+  Template.allTasks.helpers({
+    organizationName: function() {
+      var organizationId = Meteor.user() ? Meteor.user().profile.organizationId : null;
+      return Organizations.findOne(organizationId).name;
+    },
+    tasks: function() {
+      var organizationId = Meteor.user().profile.organizationId;
+      return Tasks.find({
+        organizationId: organizationId
+      }, {sort: {createdAt: -1}});
+    }
+  })
+
   Template.landingContent.helpers({
     organizationOptions: function() {
       return Organizations.find();
