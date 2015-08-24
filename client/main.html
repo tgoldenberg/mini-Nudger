@@ -76,6 +76,9 @@
 <template name="allTasks">
   <div role="tabpanel" class="tab-pane active" id="all_tasks">
     <h1>{{organizationName}} Tasks</h1>
+    {{#if noTasks}}
+      <h4>There are no existing tasks for your organization.</h4>
+    {{/if}}
     <div class="cards-holder">
       {{#each tasks}}
         {{> task}}
@@ -88,21 +91,38 @@
   <div class="card col-md-6 col-md-offset-3">
     <h3>Title: {{title}}</h3>
     <h5>Summary: {{summary}}</h5>
-    <p>{{createdAt}}</p>
-    <p>{{updatedAt}}</p>
+    <p><b>Created At:</b> {{livestamp createdAt}}</p>
+    <p><b>Updated At:</b> {{livestamp updatedAt}}</p>
     <p><b>Status:</b> {{status}}</p>
     <p><b>Importance:</b> {{importance}}</p>
-    <p><b>Assignee:</b> {{assigneeId}}</p>
-    <p><b>Assignor:</b> {{assignorId}}</p>
+    <p><b>Assignee:</b> {{assigneeVar}}</p>
+    <p><b>Assignor:</b> {{assignorVar}}</p>
   </div>
 </template>
 
 <template name="myTasks">
-  <div role="tabpanel" class="tab-pane" id="my_tasks">My Tasks</div>
+  <div role="tabpanel" class="tab-pane" id="my_tasks">
+    <h1>My Tasks</h1>
+    {{#if noPersonalTasks}}
+      <h4>Currently you have no personal tasks.</h4>
+    {{/if}}
+    <div class="cards-holder">
+    </div>
+  </div>
 </template>
 
 <template name="assignTasks">
-  <div role="tabpanel" class="tab-pane" id="assign_tasks">Assign Tasks</div>
+  <div role="tabpanel" class="tab-pane" id="assign_tasks">
+    <h1>Assign Tasks</h1>
+    {{#if noAssignableTasks}}
+      <h4>Currently there are no assignable tasks.</h4>
+    {{/if}}
+    <div class="cards-holder">
+      {{#each assignableTasks}}
+        {{> task}}
+      {{/each}}
+    </div>
+  </div>
 </template>
 
 <template name="landingContent">

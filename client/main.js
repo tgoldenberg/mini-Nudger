@@ -1,4 +1,25 @@
 if (Meteor.isClient) {
+  if (Meteor.userId()) {
+    var organizationId = Meteor.user().profile.organizationId;
+    var userId = Meteor.userId();
+
+    Session.tasks = Tasks.find({
+      organizationId: organizationId
+    }, {sort: {createdAt: -1}});
+
+    Session.personalTasks = Tasks.find({
+      organizationId: organizationId,
+      assigneeId: userId
+    }, {sort: {createdAt: -1}});
+
+    Session.assignableTasks = Tasks.find({
+      organizationId: organizationId,
+      status: "pending"
+    }, {sort: {createdAt: -1}});
+
+    Session.organizationName = Organizations.findOne(organizationId).name;
+  }
+
   Template.landingNav.events({
     'submit .user-login': function(event) {
       event.preventDefault();
@@ -15,18 +36,15 @@ if (Meteor.isClient) {
     }
   });
 
-
-
   Template.allTasks.helpers({
     organizationName: function() {
-      var organizationId = Meteor.user() ? Meteor.user().profile.organizationId : null;
-      return Organizations.findOne(organizationId).name;
+      return Session.organizationName;
     },
     tasks: function() {
-      var organizationId = Meteor.user().profile.organizationId;
-      return Tasks.find({
-        organizationId: organizationId
-      }, {sort: {createdAt: -1}});
+      return Session.tasks;
+    },
+    noTasks: function() {
+      return Session.tasks.count() == 0;
     }
   })
 
@@ -35,6 +53,33 @@ if (Meteor.isClient) {
       return Organizations.find();
     }
   });
+  Template.task.helpers({
+    assigneeVar: function() {
+      return this.assigneeId == null ? "none" : this.assigneeId;
+    },
+    assignorVar: function() {
+      return this.assignorId == null ? "none" : this.assignorId;
+    }
+  });
+
+  Template.assignTasks.helpers({
+    assignableTasks: function() {
+      return Session.assignableTasks;
+    },
+    noAssignableTasks: function() {
+      return Session.assignableTasks.count() == 0;
+    }
+  });
+
+  Template.myTasks.helpers({
+    personalTasks: function() {
+      return Session.personalTasks;
+    },
+    noPersonalTasks: function() {
+      return Session.personalTasks.count() == 0;
+    }
+  });
+
 
   Template.landingContent.events({
     'submit .new-user-registration': function(event) {
