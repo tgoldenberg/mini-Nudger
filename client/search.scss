@@ -1,0 +1,18 @@
+@import "bourbon/bourbon";
+$action-color: darken(#3a5795, 6.5%);
+
+.search-tools {
+  padding: 2em;
+  background: #f7f7f7;
+  .search-button {
+    button {
+      color: white;
+      background: $action-color;
+    }
+  }
+  .dropdown-toggle {
+    width: 100%;
+    background: $action-color;
+    color: white;
+  }
+}

@@ -2,11 +2,8 @@ if (Meteor.isClient) {
   Template.landingNav.events({
     'submit .user-login': function(event) {
       event.preventDefault();
-      console.log("form submitted", event);
       var email = event.target.loginEmail.value;
       var password = event.target.loginPassword.value;
-      console.log("email", email);
-      console.log("password", password);
       Meteor.loginWithPassword(email, password);
     }
   });
@@ -14,7 +11,6 @@ if (Meteor.isClient) {
   Template.loggedInNav.events({
     'click .logout': function(event) {
       event.preventDefault();
-      console.log("logout", event);
       Meteor.logout();
     }
   });
@@ -28,7 +24,6 @@ if (Meteor.isClient) {
   Template.landingContent.events({
     'submit .new-user-registration': function(event) {
       event.preventDefault();
-      console.log("submit signup", event);
       var firstName = event.target.registerFirstName.value;
       var lastName = event.target.registerLastName.value;
       var email = event.target.registerEmail.value;
