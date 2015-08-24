@@ -1,5 +1,8 @@
 if (Meteor.isClient) {
-  if (Meteor.userId()) {
+  var user = Meteor.users.findOne(Meteor.userId());
+  console.log(user);
+
+  if (user) {
     var organizationId = Meteor.user().profile.organizationId;
     var userId = Meteor.userId();
 
@@ -19,6 +22,7 @@ if (Meteor.isClient) {
 
     Session.organizationName = Organizations.findOne(organizationId).name;
   }
+
 
   Template.landingNav.events({
     'submit .user-login': function(event) {
