@@ -30,7 +30,8 @@ var taskData = [
     status: "pending",
     importance: "high",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    organizationId: Organizations.findOne()._id
   },
   {
     title: faker.commerce.productName(),
@@ -40,7 +41,8 @@ var taskData = [
     status: "pending",
     importance: "medium",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    organizationId: Organizations.findOne()._id
   },
   {
     title: faker.commerce.productName(),
@@ -50,7 +52,8 @@ var taskData = [
     status: "pending",
     importance: "low",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    organizationId: Organizations.findOne()._id
   },
   {
     title: faker.commerce.productName(),
@@ -60,7 +63,8 @@ var taskData = [
     status: "assigned",
     importance: "high",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    organizationId: Organizations.findOne()._id
   },
   {
     title: faker.commerce.productName(),
@@ -70,7 +74,8 @@ var taskData = [
     status: "assigned",
     importance: "medium",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    organizationId: Organizations.findOne()._id
   },
   {
     title: faker.commerce.productName(),
@@ -80,7 +85,8 @@ var taskData = [
     status: "assigned",
     importance: "low",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    organizationId: Organizations.findOne()._id
   },
   {
     title: faker.commerce.productName(),
@@ -90,7 +96,8 @@ var taskData = [
     status: "completed",
     importance: "high",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    organizationId: Organizations.findOne()._id
   },
   {
     title: faker.commerce.productName(),
@@ -100,7 +107,8 @@ var taskData = [
     status: "completed",
     importance: "medium",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    organizationId: Organizations.findOne()._id
   },
   {
     title: faker.commerce.productName(),
@@ -110,7 +118,8 @@ var taskData = [
     status: "completed",
     importance: "low",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    organizationId: Organizations.findOne()._id
   },
   {
     title: faker.commerce.productName(),
@@ -120,7 +129,8 @@ var taskData = [
     status: "pending",
     importance: "high",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    organizationId: Organizations.findOne()._id
   },
   {
     title: faker.commerce.productName(),
@@ -130,7 +140,8 @@ var taskData = [
     status: "pending",
     importance: "medium",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    organizationId: Organizations.findOne()._id
   },
   {
     title: faker.commerce.productName(),
@@ -140,7 +151,8 @@ var taskData = [
     status: "pending",
     importance: "high",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    organizationId: Organizations.findOne()._id
   },
   {
     title: faker.commerce.productName(),
@@ -150,6 +162,20 @@ var taskData = [
     status: "pending",
     importance: "low",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    organizationId: Organizations.findOne()._id
   }
 ]
+taskData.forEach(function(task) {
+  Tasks.insert({
+    title: task.title,
+    summary: task.summary,
+    assigneeId: null,
+    assignorId: null,
+    status: task.status,
+    importance: task.importance,
+    createdAt: task.createdAt,
+    updatedAt: task.updatedAt,
+    organizationId: task.organizationId
+  });
+})
