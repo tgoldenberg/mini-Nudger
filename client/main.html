@@ -10,7 +10,6 @@
     {{> landingNav}}
     {{> landingContent}}
   {{/if}}
-
 </body>
 
 <template name="loggedInContent">
@@ -57,10 +56,20 @@
         <li><a href="#">Descending Order</a></li>
       </ul>
     </div>
-
   </div>
-  <div class="navigation-tabs row">
-    <h1>Navigation Tabs</h1>
+  {{>navigationTabs}}
+</template>
+
+<template name="navigationTabs">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#all_tasks" aria-controls="allTasks" role="tab" data-toggle="tab">All Tasks</a></li>
+    <li role="presentation"><a href="#my_tasks" aria-controls="myTasks" role="tab" data-toggle="tab">My Tasks</a></li>
+    <li role="presentation"><a href="#assign_tasks" aria-controls="assignTasks" role="tab" data-toggle="tab">Assign Tasks</a></li>
+  </ul>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="all_tasks">All Tasks</div>
+    <div role="tabpanel" class="tab-pane" id="my_tasks">My Tasks</div>
+    <div role="tabpanel" class="tab-pane" id="assign_tasks">Assign Tasks</div>
   </div>
 </template>
 
