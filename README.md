@@ -9,8 +9,8 @@ A `MeteorJS` app that allows company members to drag & drop task cards and assig
 - `wolves:bourbon` for styling
 - `copleykj:livestamp` for giving `time_ago_in_words` like formatting in JS
 - `digilord:faker` for seeding the database
-**** 
-### About the App 
+*** 
+## About the App 
 Here are some features that stand out
 - users have either assignee or assignor roles, or both
 - assignees can assign tasks via drag & drop to other assignee employees
