@@ -40,6 +40,7 @@ Template.allTasks.helpers({
   }
 });
 
+// create new card in modal dialog
 Template.allTasks.events({
   'submit .new-task-form': function(event) {
     event.preventDefault();
@@ -62,5 +63,15 @@ Template.allTasks.events({
     $('.modal').modal('hide');
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
+    // call draggable again for new element
+    $( "#sortable" ).sortable({ revert: true });
+    $('.draggable').draggable(
+        {
+          revert: "invalid",
+          connectToSortable: "#sortable",
+          helper: "clone",
+          snap: ".droppable"
+        }
+      );
   }
 });
