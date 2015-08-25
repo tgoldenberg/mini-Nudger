@@ -5,9 +5,11 @@
       <h4>Currently you have no personal tasks.</h4>
     {{/if}}
     <div class="cards-holder">
-      {{#each personalTasks}}
-        {{>task}}
-      {{/each}}
+      <ul id="sortable">
+        {{#each personalTasks}}
+          {{>task}}
+        {{/each}}
+      </ul>
     </div>
   </div>
 </template>

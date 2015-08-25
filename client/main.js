@@ -15,7 +15,17 @@ if (Meteor.isClient) {
   });
 
   Template.assignableUser.onRendered(function() {
-    $('.draggable').draggable({revert: true, snap: ".droppable"});
+    $( "#sortable" ).sortable({
+      revert: true
+    })
+    $('.draggable').draggable(
+                              {
+                                revert: "invalid",
+                                connectToSortable: "#sortable",
+                                helper: "clone",
+                                snap: ".droppable"
+                              }
+                            );
     $('.droppable').droppable({
       drop: function(event, ui) {
         var firstName = $(event.target).find('.user-name').html().split(" ")[0];
@@ -27,14 +37,20 @@ if (Meteor.isClient) {
           importance: importance,
           organizationId: Meteor.user().profile.organizationId
         });
-        // console.log(selectedTask);
         var selectedUser = Meteor.users.findOne({
           "profile.firstName": firstName,
           "profile.lastName": lastName,
           "profile.organizationId": Meteor.user().profile.organizationId
         });
-        Tasks.update(selectedTask._id, {$set: {status: "assigned", assigneeId: selectedUser._id, assignorId: Meteor.userId()}});
-        // console.log(selectedUser);
+        Tasks.update(selectedTask._id, {$set:
+                                          {
+                                            status: "assigned",
+                                            assigneeId: selectedUser._id,
+                                            assignorId: Meteor.userId(),
+                                            updatedAt: new Date()
+                                          }
+                                        }
+                                      );
       }
     });
   });
@@ -47,30 +63,37 @@ if (Meteor.isClient) {
        }
       return Meteor.users.find(options);
     }
-  })
+  });
 
-  Template.loggedInContent.events({
+  Template.searchForm.events({
     'submit .search-form': function(event) {
       event.preventDefault();
       var searchText = event.target.search_text.value;
       Session.set('search', searchText);
-    },
-    'click .pending': function(event) {
-      document.getElementById('status').innerHTML = "Pending";
-      Session.set('status', 'pending');
-    },
-    'click .assigned': function() {
-      document.getElementById('status').innerHTML = "Assigned";
-      Session.set('status', 'assigned');
-    },
-    'click .completed':function() {
-      document.getElementById('status').innerHTML = "Completed";
-      Session.set('status', 'completed');
-    },
-    'click .status-all':function() {
-      document.getElementById('status').innerHTML = "All";
-      Session.set('status', 'all');
-    },
+    }
+  });
+
+  Template.statusDropdown.events({
+    'click .status-dropdown-option': function(event) {
+      var status = $(event.target).attr("id");
+      $('#status').html(status);
+      Session.set('status', status);
+    }
+    // 'click .assigned': function() {
+    //   document.getElementById('status').innerHTML = "Assigned";
+    //   Session.set('status', 'assigned');
+    // },
+    // 'click .completed':function() {
+    //   document.getElementById('status').innerHTML = "Completed";
+    //   Session.set('status', 'completed');
+    // },
+    // 'click .status-all':function() {
+    //   document.getElementById('status').innerHTML = "All";
+    //   Session.set('status', 'all');
+    // }
+  });
+
+  Template.loggedInContent.events({
     'click .high': function() {
       document.getElementById('importance').innerHTML = "High";
       Session.set('importance', 'high');
