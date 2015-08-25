@@ -13,7 +13,6 @@ if (Meteor.isClient) {
       event.preventDefault();
       var searchText = event.target.search_text.value;
       Session.set('search', searchText);
-      console.log(Session.get('search'));
     },
     'click .pending': function(event) {
       document.getElementById('status').innerHTML = "Pending";
@@ -82,6 +81,7 @@ if (Meteor.isClient) {
       var order = Session.get('order');
       var status = Session.get('status');
       var importance = Session.get('importance');
+      var searchText = Session.get('search');
       var options = {organizationId: Meteor.user().profile.organizationId};
       if (status != "all") {
         options.status = status;
@@ -90,8 +90,13 @@ if (Meteor.isClient) {
         options.importance = importance;
       }
       console.log(options);
-
-      var tasks = Tasks.find(options, {sort: {createdAt: order}});
+      var tasks;
+      if (searchText == "") {
+        tasks = Tasks.find(options, {sort: {createdAt: order}});
+      } else {
+        options.$or = [{title: searchText}, {summary: searchText}];
+        tasks = Tasks.find(options);
+      }
       return tasks;
     },
 
