@@ -1,8 +1,14 @@
 <template name="navigationTabs">
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#all_tasks" aria-controls="allTasks" role="tab" data-toggle="tab">All Tasks</a></li>
-    <li role="presentation"><a href="#my_tasks" aria-controls="myTasks" role="tab" data-toggle="tab">My Tasks</a></li>
-    <li role="presentation"><a href="#assign_tasks" aria-controls="assignTasks" role="tab" data-toggle="tab">Assign Tasks</a></li>
+    <li role="presentation" class="active">
+      <a href="#all_tasks" aria-controls="allTasks" role="tab" data-toggle="tab">All Tasks</a>
+    </li>
+    <li role="presentation">
+      <a href="#my_tasks" aria-controls="myTasks" role="tab" data-toggle="tab">My Tasks</a>
+    </li>
+    <li role="presentation">
+      <a href="#assign_tasks" aria-controls="assignTasks" role="tab" data-toggle="tab">Assign Tasks</a>
+    </li>
   </ul>
   <div class="tab-content">
     {{> allTasks}}

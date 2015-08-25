@@ -26,6 +26,7 @@ if (Meteor.isClient) {
                                 snap: ".droppable"
                               }
                             );
+
     $('.droppable').droppable({
       drop: function(event, ui) {
         var firstName = $(event.target).find('.user-name').html().split(" ")[0];
@@ -79,46 +80,24 @@ if (Meteor.isClient) {
       $('#status').html(status);
       Session.set('status', status);
     }
-    // 'click .assigned': function() {
-    //   document.getElementById('status').innerHTML = "Assigned";
-    //   Session.set('status', 'assigned');
-    // },
-    // 'click .completed':function() {
-    //   document.getElementById('status').innerHTML = "Completed";
-    //   Session.set('status', 'completed');
-    // },
-    // 'click .status-all':function() {
-    //   document.getElementById('status').innerHTML = "All";
-    //   Session.set('status', 'all');
-    // }
   });
 
-  Template.loggedInContent.events({
-    'click .high': function() {
-      document.getElementById('importance').innerHTML = "High";
-      Session.set('importance', 'high');
-    },
-    'click .medium': function() {
-      document.getElementById('importance').innerHTML = "Medium";
-      Session.set('importance', 'medium');
-    },
-    'click .low': function() {
-      document.getElementById('importance').innerHTML = "Low";
-      Session.set('importance', 'low');
-    },
-    'click .importance-all':function() {
-      document.getElementById('importance').innerHTML = "All";
-      Session.set('importance', 'all');
-    },
-    'click .ascending':function() {
-      document.getElementById('order').innerHTML = "Ascending";
-      Session.set('order', 1)
-    },
-    'click .descending':function() {
-      document.getElementById('order').innerHTML = "Descending";
-      Session.set('order', -1);
+  Template.importanceDropdown.events({
+    'click .importance-dropdown-option': function(event) {
+      var importance = $(event.target).attr("id");
+      $('#importance').html(importance);
+      Session.set('importance', importance);
     }
-  })
+  });
+
+  Template.orderDropdown.events({
+    'click .order-dropdown-option': function(event) {
+      var order = $(event.target).attr("id");
+      $('#order').html(order.split(" ")[0]);
+      var orderValue = order == "ascending" ? 1 : -1;
+      Session.set('order', orderValue);
+    }
+  });
 
   Template.landingNav.events({
     'submit .user-login': function(event) {
