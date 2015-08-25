@@ -12,7 +12,32 @@ if (Meteor.isClient) {
     initials: function() {
       return this.profile.firstName.split("")[0] + this.profile.lastName.split("")[0];
     }
-  })
+  });
+
+  Template.assignableUser.onRendered(function() {
+    $('.draggable').draggable({revert: true, snap: ".droppable"});
+    $('.droppable').droppable({
+      drop: function(event, ui) {
+        var firstName = $(event.target).find('.user-name').html().split(" ")[0];
+        var lastName = $(event.target).find('.user-name').html().split(" ")[1];
+        var title = $(ui.draggable).find('.title').html();
+        var importance = $(ui.draggable).find('.importance').html();
+        var selectedTask = Tasks.findOne({
+          title: title,
+          importance: importance,
+          organizationId: Meteor.user().profile.organizationId
+        });
+        // console.log(selectedTask);
+        var selectedUser = Meteor.users.findOne({
+          "profile.firstName": firstName,
+          "profile.lastName": lastName,
+          "profile.organizationId": Meteor.user().profile.organizationId
+        });
+        Tasks.update(selectedTask._id, {$set: {status: "assigned", assigneeId: selectedUser._id, assignorId: Meteor.userId()}});
+        // console.log(selectedUser);
+      }
+    });
+  });
 
   Template.assignTasks.helpers({
     assignableUsers: function() {

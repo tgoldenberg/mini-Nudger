@@ -1,6 +1,8 @@
 @import "bourbon/bourbon";
 $action-color: darken(#3a5795, 6.5%);
-
+html, body {
+  overflow-x: hidden;
+}
 .landing-content {
   background: #f0f9ff; /* Old browsers */
   background: -moz-linear-gradient(top,  #f0f9ff 0%, #cbebff 47%, #a1dbff 100%); /* FF3.6+ */
