@@ -74,9 +74,18 @@ if (Meteor.isClient) {
     },
     tasks: function() {
       var order = Session.get('order');
-      var tasks = Tasks.find({
-        organizationId: Meteor.user().profile.organizationId
-      }, {sort: {createdAt: order}});
+      var status = Session.get('status');
+      var importance = Session.get('importance');
+      var options = {organizationId: Meteor.user().profile.organizationId};
+      if (status != "all") {
+        options.status = status;
+      }
+      if (importance != "all") {
+        options.importance = importance;
+      }
+      console.log(options);
+
+      var tasks = Tasks.find(options, {sort: {createdAt: order}});
       return tasks;
     },
 
