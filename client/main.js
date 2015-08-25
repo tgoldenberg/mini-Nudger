@@ -1,28 +1,55 @@
+
 if (Meteor.isClient) {
-  var user = Meteor.users.findOne(Meteor.userId());
-  console.log(user);
+  Meteor.subscribe('users');
+  Meteor.subscribe('tasks');
+  Meteor.subscribe('organizations');
 
-  if (user) {
-    var organizationId = Meteor.user().profile.organizationId;
-    var userId = Meteor.userId();
+  Session.set('order', -1);
+  Session.set('importance', 'all');
+  Session.set('status', 'all');
 
-    Session.tasks = Tasks.find({
-      organizationId: organizationId
-    }, {sort: {createdAt: -1}});
-
-    Session.personalTasks = Tasks.find({
-      organizationId: organizationId,
-      assigneeId: userId
-    }, {sort: {createdAt: -1}});
-
-    Session.assignableTasks = Tasks.find({
-      organizationId: organizationId,
-      status: "pending"
-    }, {sort: {createdAt: -1}});
-
-    Session.organizationName = Organizations.findOne(organizationId).name;
-  }
-
+  Template.loggedInContent.events({
+    'click .pending': function(event) {
+      document.getElementById('status').innerHTML = "Pending";
+      Session.set('status', 'pending');
+    },
+    'click .assigned': function() {
+      document.getElementById('status').innerHTML = "Assigned";
+      Session.set('status', 'assigned');
+    },
+    'click .completed':function() {
+      document.getElementById('status').innerHTML = "Completed";
+      Session.set('status', 'completed');
+    },
+    'click .status-all':function() {
+      document.getElementById('status').innerHTML = "All";
+      Session.set('status', 'all');
+    },
+    'click .high': function() {
+      document.getElementById('importance').innerHTML = "High";
+      Session.set('importance', 'high');
+    },
+    'click .medium': function() {
+      document.getElementById('importance').innerHTML = "Medium";
+      Session.set('importance', 'medium');
+    },
+    'click .low': function() {
+      document.getElementById('importance').innerHTML = "Low";
+      Session.set('importance', 'low');
+    },
+    'click .importance-all':function() {
+      document.getElementById('importance').innerHTML = "All";
+      Session.set('importance', 'all');
+    },
+    'click .ascending':function() {
+      document.getElementById('order').innerHTML = "Ascending";
+      Session.set('order', 1)
+    },
+    'click .descending':function() {
+      document.getElementById('order').innerHTML = "Descending";
+      Session.set('order', -1);
+    }
+  })
 
   Template.landingNav.events({
     'submit .user-login': function(event) {
@@ -42,15 +69,24 @@ if (Meteor.isClient) {
 
   Template.allTasks.helpers({
     organizationName: function() {
-      return Session.organizationName;
+      var organization = Organizations.findOne(Meteor.user().profile.organizationId);
+      return organization == null ? null : organization.name;
     },
     tasks: function() {
-      return Session.tasks;
+      var order = Session.get('order');
+      var tasks = Tasks.find({
+        organizationId: Meteor.user().profile.organizationId
+      }, {sort: {createdAt: order}});
+      return tasks;
     },
+
     noTasks: function() {
-      return Session.tasks.count() == 0;
+      var allTasks = Tasks.find({
+        organizationId: Meteor.user().profile.organizationId
+      });
+      return allTasks.count() == 0;
     }
-  })
+  });
 
   Template.landingContent.helpers({
     organizationOptions: function() {
@@ -68,19 +104,33 @@ if (Meteor.isClient) {
 
   Template.assignTasks.helpers({
     assignableTasks: function() {
-      return Session.assignableTasks;
+      return Tasks.find({
+        organizationId: Meteor.user().profile.organizationId,
+        status: "pending"
+      }, {sort: {createdAt: -1}})
     },
     noAssignableTasks: function() {
-      return Session.assignableTasks.count() == 0;
+      var tasks = Tasks.find({
+        organizationId: Meteor.user().profile.organizationId,
+        status: "pending"
+      });
+      return tasks.count() == 0;
     }
   });
 
   Template.myTasks.helpers({
     personalTasks: function() {
-      return Session.personalTasks;
+      return Tasks.find({
+        organizationId: Meteor.user().profile.organizationId,
+        assigneeId: Meteor.userId()
+      });
     },
     noPersonalTasks: function() {
-      return Session.personalTasks.count() == 0;
+      var tasks = Tasks.find({
+        organizationId: Meteor.user().profile.organizationId,
+        assigneeId: Meteor.userId()
+      })
+      return tasks.count() == 0;
     }
   });
 

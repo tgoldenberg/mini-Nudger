@@ -1,0 +1,10 @@
+<template name="myTasks">
+  <div role="tabpanel" class="tab-pane" id="my_tasks">
+    <h1>My Tasks</h1>
+    {{#if noPersonalTasks}}
+      <h4>Currently you have no personal tasks.</h4>
+    {{/if}}
+    <div class="cards-holder">
+    </div>
+  </div>
+</template>

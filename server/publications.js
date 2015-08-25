@@ -12,8 +12,6 @@ if (Meteor.isServer) {
   });
 
   Meteor.publish('organizations', function() {
-    if (this.userId) {
-      return Organizations.find();
-    }
+    return Organizations.find();
   });
 }

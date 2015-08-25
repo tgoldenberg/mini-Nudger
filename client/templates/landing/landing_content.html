@@ -1,0 +1,50 @@
+<template name="landingContent">
+  <div class="landing-content">
+    <div class="col-md-7">
+      <h1>MiniNudge</h1>
+    </div>
+    <div class="col-md-5 new-user-form">
+      <div id="new_user_wrapper">
+        <h2>Sign Up</h2>
+        <form class="new-user-registration">
+          <div class="form-group flex-group">
+            <input type="text" class="form-control" name="registerFirstName" placeholder="first name">
+            <input type="text" class="form-control" name="registerLastName" placeholder="last name">
+          </div>
+
+          <div class="form-group">
+            <input type="email" class="form-control" name="registerEmail" placeholder="email">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="registerPassword" placeholder="password">
+          </div>
+          <div class="form-group">
+            <select class="form-control" name="registerOrganization">
+              {{#each organizationOptions}}
+              <option>{{name}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="registerPosition" placeholder="position">
+          </div>
+          <div class="flex-group">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="registerAssignee"> Enable Assignee Role
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="registerAssignor"> Enable Assignor Role
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
