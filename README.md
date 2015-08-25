@@ -6,7 +6,6 @@ A `MeteorJS` app that allows company members to drag & drop task cards and assig
 - `nemo64:bootstrap` - article [here](http://www.manuel-schoebel.com/blog/meteorjs-and-twitter-bootstrap---the-right-way)
 - `fourseven:scss` for `scss`
 - `accounts-password` for user accounts
-- `wolves:bourbon` for styling
 - `copleykj:livestamp` for giving `time_ago_in_words` like formatting in JS
 - `digilord:faker` for seeding the database
 
@@ -15,7 +14,7 @@ A `MeteorJS` app that allows company members to drag & drop task cards and assig
 Here are some features that stand out
 - users have either assignee or assignor roles, or both
 - assignees can assign tasks via drag & drop to other assignee employees
-- search field filters tasks by title and summary
+- search filters tasks by title and summary
 - tasks can be grouped in ascending / descending order, according to status ( pending, assigned, etc.), or according to importance
 
 ## Feel free to clone or submit issues / pull requests for future enhancements

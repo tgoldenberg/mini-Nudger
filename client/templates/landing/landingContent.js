@@ -5,6 +5,7 @@ Template.landingContent.events({
     var target = event.target;
     var organization = event.target.registerOrganization.value;
     var organizationId = Organizations.findOne({name: organization})._id;
+
     Accounts.createUser({
       email: target.registerEmail.value,
       password: target.registerPassword.value,
@@ -15,6 +16,10 @@ Template.landingContent.events({
         position: target.registerPosition.value,
         assignee: target.registerAssignee.checked,
         assignor: target.registerAssignor.checked
+      }
+    }, function(errorObject) {
+      if (errorObject) {
+        throwError(errorObject.reason);
       }
     });
   }

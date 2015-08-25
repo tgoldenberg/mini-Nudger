@@ -62,6 +62,8 @@ Template.allTasks.events({
     }
     $('.modal').modal('hide');
     $('body').removeClass('modal-open');
+    event.target.title.value = "";
+    event.target.summary.value = "";
     $('.modal-backdrop').remove();
     // call draggable again for new element
     $( "#sortable" ).sortable({ revert: true });
