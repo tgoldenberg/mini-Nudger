@@ -1,4 +1,3 @@
-
 if (Meteor.isClient) {
   Meteor.subscribe('users');
   Meteor.subscribe('tasks');
@@ -7,8 +6,15 @@ if (Meteor.isClient) {
   Session.set('order', -1);
   Session.set('importance', 'all');
   Session.set('status', 'all');
+  Session.set('search', "");
 
   Template.loggedInContent.events({
+    'submit .search-form': function(event) {
+      event.preventDefault();
+      var searchText = event.target.search_text.value;
+      Session.set('search', searchText);
+      console.log(Session.get('search'));
+    },
     'click .pending': function(event) {
       document.getElementById('status').innerHTML = "Pending";
       Session.set('status', 'pending');
@@ -113,10 +119,14 @@ if (Meteor.isClient) {
 
   Template.assignTasks.helpers({
     assignableTasks: function() {
-      return Tasks.find({
-        organizationId: Meteor.user().profile.organizationId,
-        status: "pending"
-      }, {sort: {createdAt: -1}})
+      var order = Session.get('order');
+      var importance = Session.get('importance');
+      var options = {organizationId: Meteor.user().profile.organizationId, status: "pending"};
+      if (importance != "all") {
+        options.importance = importance;
+      }
+      console.log(options);
+      return Tasks.find(options, {sort: {createdAt: order}})
     },
     noAssignableTasks: function() {
       var tasks = Tasks.find({
