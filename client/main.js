@@ -78,23 +78,25 @@ if (Meteor.isClient) {
       return organization == null ? null : organization.name;
     },
     tasks: function() {
-      var order = Session.get('order');
-      var status = Session.get('status');
-      var importance = Session.get('importance');
-      var searchText = Session.get('search');
-      var options = {organizationId: Meteor.user().profile.organizationId};
+      var tasks;
+      var order       = Session.get('order');
+      var status      = Session.get('status');
+      var importance  = Session.get('importance');
+      var searchText  = Session.get('search');
+      var options     = {organizationId: Meteor.user().profile.organizationId};
       if (status != "all") {
         options.status = status;
       }
       if (importance != "all") {
         options.importance = importance;
       }
-      console.log(options);
-      var tasks;
       if (searchText == "") {
         tasks = Tasks.find(options, {sort: {createdAt: order}});
       } else {
-        options.$or = [{title: searchText}, {summary: searchText}];
+        options.$or = [
+                        {title:    { $regex: searchText, $options: "i"}},
+                        {summary:  { $regex: searchText, $options: "i"}}
+                      ];
         tasks = Tasks.find(options);
       }
       return tasks;
@@ -124,14 +126,23 @@ if (Meteor.isClient) {
 
   Template.assignTasks.helpers({
     assignableTasks: function() {
-      var order = Session.get('order');
-      var importance = Session.get('importance');
-      var options = {organizationId: Meteor.user().profile.organizationId, status: "pending"};
+      var order       = Session.get('order');
+      var importance  = Session.get('importance');
+      var searchText  = Session.get('search');
+      var options     = {organizationId: Meteor.user().profile.organizationId, status: "pending"};
+      
       if (importance != "all") {
         options.importance = importance;
       }
-      console.log(options);
-      return Tasks.find(options, {sort: {createdAt: order}})
+      if (searchText == "") {
+        return Tasks.find(options, {sort: {createdAt: order}})
+      } else {
+        options.$or = [
+                        {title:    { $regex: searchText, $options: "i"}},
+                        {summary:  { $regex: searchText, $options: "i"}}
+                      ];
+        return Tasks.find(options, {sort: {createdAt: order}});
+      }
     },
     noAssignableTasks: function() {
       var tasks = Tasks.find({
@@ -144,10 +155,31 @@ if (Meteor.isClient) {
 
   Template.myTasks.helpers({
     personalTasks: function() {
-      return Tasks.find({
-        organizationId: Meteor.user().profile.organizationId,
-        assigneeId: Meteor.userId()
-      });
+      var tasks;
+      var order       = Session.get('order');
+      var status      = Session.get('status');
+      var importance  = Session.get('importance');
+      var searchText  = Session.get('search');
+      var options     = {
+                          organizationId: Meteor.user().profile.organizationId,
+                          assigneeId: Meteor.userId()
+                        };
+      if (status != "all") {
+        options.status = status;
+      }
+      if (importance != "all") {
+        options.importance = importance;
+      }
+      if (searchText == "") {
+        tasks = Tasks.find(options, {sort: {createdAt: order}});
+      } else {
+        options.$or = [
+                        {title:    { $regex: searchText, $options: "i"}},
+                        {summary:  { $regex: searchText, $options: "i"}}
+                      ];
+        tasks = Tasks.find(options);
+      }
+      return tasks;
     },
     noPersonalTasks: function() {
       var tasks = Tasks.find({
