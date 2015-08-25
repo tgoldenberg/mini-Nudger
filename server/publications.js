@@ -1,7 +1,7 @@
 if (Meteor.isServer) {
   Meteor.publish("users", function () {
     if (this.userId) {
-      return Meteor.users.findOne(this.userId);
+      return Meteor.users.find({},{fields: {'profile': 1}});
     }
   });
 

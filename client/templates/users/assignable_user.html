@@ -1,0 +1,9 @@
+<template name="assignableUser">
+  <div class="user-profile">
+    {{> avatar user=this initials=initials size="large"}}
+    {{#with profile}}
+      <p class="user-name">{{firstName}} {{lastName}}</p>
+      <p class="user-position">{{position}}</p>
+    {{/with}}
+  </div>
+</template>

@@ -1,0 +1,22 @@
+.user-profile {
+  display: flex;
+  background: white;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  .user-name {
+    font-size: 1.3em;
+    padding: .5em;
+    font-weight: bold;
+    line-height: 2;
+    letter-spacing: 1.3px;
+  }
+  .user-position {
+    line-height: 4;
+    margin-left: auto;
+    margin-right: 2em;
+  }
+}
+.users-holder {
+  background: #f7f7f7;
+  border-radius: 4px;
+}

@@ -8,6 +8,22 @@ if (Meteor.isClient) {
   Session.set('status', 'all');
   Session.set('search', "");
 
+  Template.assignableUser.helpers({
+    initials: function() {
+      return this.profile.firstName.split("")[0] + this.profile.lastName.split("")[0];
+    }
+  })
+
+  Template.assignTasks.helpers({
+    assignableUsers: function() {
+      var options = {
+        "profile.organizationId"  : Meteor.user().profile.organizationId,
+        "profile.assignee"        : "on"
+       }
+      return Meteor.users.find(options);
+    }
+  })
+
   Template.loggedInContent.events({
     'submit .search-form': function(event) {
       event.preventDefault();
@@ -130,7 +146,7 @@ if (Meteor.isClient) {
       var importance  = Session.get('importance');
       var searchText  = Session.get('search');
       var options     = {organizationId: Meteor.user().profile.organizationId, status: "pending"};
-      
+
       if (importance != "all") {
         options.importance = importance;
       }
