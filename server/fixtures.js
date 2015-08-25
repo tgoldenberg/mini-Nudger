@@ -204,6 +204,11 @@ function seedOrganizations(organizationsData) {
   });
 }
 
+function randomBool() {
+  Math.random()<.5;
+}
+
+
 function seedUsers() {
   for (i=0; i<20; i++) {
     var user = usersData();
@@ -224,10 +229,6 @@ function seedUsers() {
   }
 }
 
-function randomBool() {
-  Math.random()<.5;
-}
-
 function usersData() {
   return {
     firstName: faker.name.firstName(),
@@ -235,8 +236,8 @@ function usersData() {
     email: faker.internet.email(),
     password: 'password',
     position: faker.commerce.department(),
-    assignee: randomBool(),
-    assignor: randomBool(),
+    assignee: Math.random()<.5,
+    assignor: Math.random()<.5,
     organizationId: Organizations.findOne()._id,
     createdAt: new Date(),
     updatedAt: new Date()

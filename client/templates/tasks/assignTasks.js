@@ -7,13 +7,6 @@ Template.assignTasks.helpers({
     };
     return Meteor.users.find(options);
   },
-
-  assignorBool: function() {
-    var bool = Meteor.user().profile.assignor == true;
-    console.log(bool);
-    return bool;
-  },
-
   // find all tasks that have status of pending, with available search and filter options
   assignableTasks: function() {
     var order       = Session.get('order');
