@@ -11,22 +11,17 @@
         <h2>Assignable Users</h2>
       </div>
     </div>
-    {{# if assignorBool }}
-      <div class="cards-holder">
-        <div class="col-md-7">
-          {{#each assignableTasks}}
-            {{> assignableTask}}
-          {{/each}}
-        </div>
-        <div class="col-md-5 users-holder">
-
-          {{#each assignableUsers}}
-            {{> assignableUser}}
-          {{/each}}
-        </div>
+    <div class="cards-holder">
+      <div class="col-md-7">
+        {{#each assignableTasks}}
+          {{> assignableTask}}
+        {{/each}}
       </div>
-    {{else}}
-      <h2>You do not have assignor privileges</h2>  
-    {{/if}}
+      <div class="col-md-5 users-holder">
+        {{#each assignableUsers}}
+          {{> assignableUser}}
+        {{/each}}
+      </div>
+    </div>
   </div>
 </template>

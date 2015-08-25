@@ -3,13 +3,13 @@ Template.assignTasks.helpers({
   assignableUsers: function() {
     var options = {
       "profile.organizationId"  : Meteor.user().profile.organizationId,
-      "profile.assignee"        : "on"
+      "profile.assignee"        : true
     };
     return Meteor.users.find(options);
   },
 
   assignorBool: function() {
-    var bool = Meteor.user().profile.assignor == "on";
+    var bool = Meteor.user().profile.assignor == true;
     console.log(bool);
     return bool;
   },
