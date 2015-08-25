@@ -6,7 +6,7 @@ Template.landingNav.events({
     var password = event.target.loginPassword.value;
     Meteor.loginWithPassword(email, password, function(errorObject) {
       if (errorObject) {
-        return throwError("Invalid login.");
+        return throwError(errorObject.reason);
       }
     });
   }
