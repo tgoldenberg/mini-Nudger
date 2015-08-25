@@ -3,6 +3,7 @@ Template.landingContent.events({
   'submit .new-user-registration': function(event) {
     event.preventDefault();
     var target = event.target;
+    debugger
     var organization = event.target.registerOrganization.value;
     var organizationId = Organizations.findOne({name: organization})._id;
     Accounts.createUser({
@@ -13,8 +14,8 @@ Template.landingContent.events({
         lastName: target.registerLastName.value,
         organizationId: organizationId,
         position: target.registerPosition.value,
-        assignee: target.registerAssignee.value,
-        assignor: target.registerAssignor.value
+        assignee: target.registerAssignee.checked,
+        assignor: target.registerAssignor.checked
       }
     });
   }

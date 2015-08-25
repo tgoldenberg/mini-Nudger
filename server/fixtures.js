@@ -225,9 +225,7 @@ function seedUsers() {
 }
 
 function randomBool() {
-  var bool = Math.random()<.5;
-  var result = bool == true ? "on" : "off"
-  return result;
+  Math.random()<.5;
 }
 
 function usersData() {
