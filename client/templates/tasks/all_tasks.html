@@ -1,5 +1,8 @@
 <template name="allTasks">
   <div role="tabpanel" class="tab-pane active" id="all_tasks">
+    <div class="button-holder">
+      <button class="btn btn-primary" id="create_card_button" data-toggle="modal" data-target=".bs-example-modal-lg">Create Card</button>
+    </div>
     <h1>{{organizationName}} Tasks</h1>
     {{#if noTasks}}
       <h4>There are no existing tasks for your organization.</h4>
@@ -10,4 +13,29 @@
       {{/each}}
     </div>
   </div>
+  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <h2>Create a Card</h2>
+      <form class="new-task-form">
+        <div class="form-group">
+          <input type="text" class="form-control" id="card_title" name="title" placeholder="title">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="card_summary" name="summary" placeholder="summary...">
+        </div>
+        <div class="form-group">
+          <select class="form-control" name="importance">
+            <option>high</option>
+            <option>medium</option>
+            <option>low</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 </template>

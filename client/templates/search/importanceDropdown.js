@@ -2,7 +2,7 @@
 Template.importanceDropdown.events({
   'click .importance-dropdown-option': function(event) {
     var importance = $(event.target).attr("id");
-    $('#importance').html(importance);
+    $('#importance').html(capitalize(importance));
     Session.set('importance', importance);
   }
 });
